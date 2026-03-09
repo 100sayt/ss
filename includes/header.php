@@ -4,25 +4,19 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/language.php';
 
-// Verilənlər bazası sxemini yoxla və yenilə
 ensure_database_schema($pdo);
-
-// Check Remember Me cookie
 check_remember_me($pdo);
 
-// Qlobal tənzimləmələri gətir
 $stmt = $pdo->query("SELECT setting_key, setting_value FROM settings");
 $settings = [];
 while ($row = $stmt->fetch()) {
     $settings[$row['setting_key']] = $row['setting_value'];
 }
 
-// Aktiv Header reklamını gətir
 $stmt_ad = $pdo->prepare("SELECT * FROM ads WHERE position = 'header_16_9' AND is_active = 1 LIMIT 1");
 $stmt_ad->execute();
 $header_ad = $stmt_ad->fetch();
 
-// Giriş məhdudiyyəti yoxlanışı
 if (($settings['site_access_restricted'] ?? '0') === '1' && !is_logged_in()) {
     $current_page = basename($_SERVER['PHP_SELF']);
     $allowed_pages = ['login.php', 'register.php', 'logout.php'];
@@ -32,10 +26,7 @@ if (($settings['site_access_restricted'] ?? '0') === '1' && !is_logged_in()) {
     }
 }
 
-// Vaxtı keçmiş boost-ların təmizlənməsi
 check_expired_boosts($pdo);
-
-// Aktiv səhifəni təyin et (Mobil menyu rənglənməsi üçün)
 $active_page = basename($_SERVER['PHP_SELF']);
 ?><!DOCTYPE html>
 <html lang="<?= htmlspecialchars($current_lang ?? 'az') ?>">
@@ -44,7 +35,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>RentAl - Turhan Elan</title>
 
-    <!-- Essential Fallback Styles -->
+    <!-- CSS Fallbacks -->
     <style>
         .hidden { display: none !important; }
         [x-cloak] { display: none !important; }
@@ -58,7 +49,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
         }
     </style>
 
-    <!-- Tailwind Config -->
     <script>
         window.tailwind = window.tailwind || {};
         tailwind.config = {
@@ -94,38 +84,32 @@ $active_page = basename($_SERVER['PHP_SELF']);
             --primary-color: #ff6b6b;
             --primary-hover: #ee5253;
         }
-
         body {
             background-color: #f8fafc;
             padding-bottom: 75px;
+            top: 0 !important;
             -webkit-text-size-adjust: 100%;
             font-family: 'Inter', sans-serif;
         }
-
         @media (min-width: 1024px) {
             body { padding-bottom: 0; }
         }
-
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
             font-weight: normal;
             font-style: normal;
-            line-height: 1;
             display: inline-block;
             white-space: nowrap;
             word-wrap: normal;
             direction: ltr;
             -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
         }
-
         .glass-header {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 107, 107, 0.08);
         }
-
         .mobile-nav {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
@@ -133,23 +117,19 @@ $active_page = basename($_SERVER['PHP_SELF']);
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
         }
-
         .nav-active { color: #ff6b6b !important; }
         .nav-active .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
-
         .center-btn {
             width: 58px; height: 58px; background: #ff6b6b; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; color: white;
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4); border: 5px solid #f8fafc;
             transition: all 0.3s ease;
         }
-
         .mobile-drawer {
             position: fixed; inset: 0; background: white; z-index: 9999;
             transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .mobile-drawer.open { transform: translateX(0); }
-
         .loader-spinner {
             border: 4px solid rgba(255, 107, 107, 0.2); border-left-color: #ff6b6b;
             border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
@@ -165,7 +145,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
                 autoDisplay: false
             }, 'google_translate_element');
         }
-
         function setGoogTrans(lang) {
             const domain = window.location.hostname;
             document.cookie = "googtrans=/az/" + lang + "; path=/; domain=" + domain;
@@ -200,12 +179,12 @@ $active_page = basename($_SERVER['PHP_SELF']);
             </div>
 
             <nav class="flex items-center gap-8">
-                <a class="text-slate-600 hover:text-primary transition-colors text-sm font-semibold first-letter:uppercase" href="/index.php"><?= htmlspecialchars(t('home') ?? 'ana səhifə') ?></a>
+                <a class="text-slate-600 hover:text-primary transition-colors text-sm font-semibold" href="/index.php"><?= htmlspecialchars(t('home') ?? 'Ana Səhifə') ?></a>
 
                 <div class="flex items-center gap-2 notranslate">
-                    <button onclick="setGoogTrans('az')" class="text-[11px] font-bold hover:text-primary transition-colors">AZ</button>
-                    <button onclick="setGoogTrans('ru')" class="text-[11px] font-bold hover:text-primary transition-colors">RU</button>
-                    <button onclick="setGoogTrans('en')" class="text-[11px] font-bold hover:text-primary transition-colors">EN</button>
+                    <button onclick="setGoogTrans('az')" class="text-[11px] font-bold hover:text-primary">AZ</button>
+                    <button onclick="setGoogTrans('ru')" class="text-[11px] font-bold hover:text-primary">RU</button>
+                    <button onclick="setGoogTrans('en')" class="text-[11px] font-bold hover:text-primary">EN</button>
                 </div>
 
                 <a href="/add_listing.php"
@@ -263,7 +242,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
     </div>
 </div>
 
-<!-- Mobile Drawer -->
 <div x-cloak
      :class="mobileMenuOpen ? 'open' : ''"
      class="mobile-drawer flex flex-col">
@@ -289,10 +267,10 @@ $active_page = basename($_SERVER['PHP_SELF']);
 
         <div class="space-y-2">
             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">Menyu</p>
-            <a href="/index.php" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:text-primary transition-all">
+            <a href="/index.php" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:bg-primary/5 hover:text-primary transition-all">
                 <span class="material-symbols-outlined">home</span> Ana səhifə
             </a>
-            <a href="/categories.php" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:text-primary transition-all">
+            <a href="/categories.php" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:bg-primary/5 hover:text-primary transition-all">
                 <span class="material-symbols-outlined">grid_view</span> Kateqoriyalar
             </a>
         </div>
@@ -303,12 +281,18 @@ $active_page = basename($_SERVER['PHP_SELF']);
                 <a href="/profile.php" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:text-primary transition-all">
                     <span class="material-symbols-outlined">account_circle</span> Profilim
                 </a>
+                <a href="/profile.php?tab=my_listings" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold hover:text-primary transition-all">
+                    <span class="material-symbols-outlined">list_alt</span> Mənim elanlarım
+                </a>
                 <a href="/logout.php" class="flex items-center gap-4 p-4 rounded-2xl bg-red-50 text-red-600 font-bold hover:bg-red-100 transition-all">
                     <span class="material-symbols-outlined">logout</span> Çıxış
                 </a>
             <?php else: ?>
                 <a href="/login.php" class="flex items-center gap-4 p-4 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/20">
                     <span class="material-symbols-outlined">login</span> Giriş Edin
+                </a>
+                <a href="/register.php" class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 text-slate-900 font-bold">
+                    <span class="material-symbols-outlined">person_add</span> Qeydiyyat
                 </a>
             <?php endif; ?>
         </div>
@@ -336,7 +320,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
         box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); border: 4px solid white;
         transition: all 0.3s ease;
     }
-    .center-btn:active { transform: scale(0.9); }
     .nav-item-active { color: #ff6b6b !important; }
     .nav-item-inactive { color: #94a3b8; }
 </style>
