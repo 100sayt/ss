@@ -1,0 +1,7 @@
+Problem: Tailwind CSS CDN layout breakage on iOS Safari.
+Symptoms: "hidden" elements appearing, unstyled content.
+Fix:
+1. Reorder tailwind.config BEFORE the CDN script.
+2. Ensure no empty strings in tailwind.config (e.g., color values).
+3. Add CSS fallbacks for critical layout classes (like .hidden) in the <head> to handle CDN failure gracefully.
+4. Ensure no leading whitespace before <!DOCTYPE html> to avoid Quirks Mode in Safari.

@@ -1,0 +1,5 @@
+I will fix the iOS layout breakage by:
+1. Reordering Tailwind configuration so it loads before the CDN script.
+2. Fixing invalid/empty color values in the Tailwind config.
+3. Adding essential CSS fallbacks (like .hidden) to ensure layout structure even if Tailwind fails.
+4. Cleaning up potential whitespace issues in PHP files that might trigger Quirks Mode.

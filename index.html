@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>RentAl - Turhan Elan</title>
+
+    <style>
+        .hidden { display: none !important; }
+        @media (min-width: 1024px) {
+            .lg\:block { display: block !important; }
+            .lg\:hidden { display: none !important; }
+        }
+    </style>
+
+    <script>
+        window.tailwind = window.tailwind || {};
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#ff6b6b",
+                        "primary-hover": "#ee5253",
+                        "background-light": "#f8fafc",
+                        "surface-light": "#ffffff"
+                    }
+                },
+            },
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8fafc]">
+    <header class="hidden lg:block bg-blue-500 p-4">Desktop Header</header>
+    <div class="lg:hidden bg-green-500 p-4">Mobile Header</div>
+    <div class="p-10">
+        <h2 class="text-3xl font-bold">Premium Kirayə Platforması</h2>
+        <p>İstədiyiniz hər şeyi icarəyə götürün</p>
+    </div>
+</body>
+</html>
