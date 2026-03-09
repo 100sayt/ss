@@ -41,15 +41,25 @@ $active_page = basename($_SERVER['PHP_SELF']);
 <html lang="<?= htmlspecialchars($current_lang ?? 'az') ?>">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+
     <title>RentAl - Turhan Elan</title>
 
-    <!-- CSS Fallbacks for Layout (Crucial if CDN fails) -->
+    <!-- CSS Fallbacks for Layout (Crucial if CDN fails or JS is blocked) -->
     <style>
+        [x-cloak] { display: none !important; }
         .hidden { display: none !important; }
+
+        /* Ensure initial layout doesn't stack everything */
         @media (min-width: 1024px) {
             .lg\:block { display: block !important; }
             .lg\:hidden { display: none !important; }
+            header.lg\:block { display: block !important; }
+        }
+        @media (max-width: 1023px) {
+            .lg\:block { display: none !important; }
+            .lg\:hidden { display: flex !important; } /* Use flex for the mobile top bar */
         }
     </style>
 
@@ -102,6 +112,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
             background-color: #f8fafc;
             padding-bottom: 75px; /* Mobildə aşağı menyu üçün boşluq */
             top: 0 !important;
+            -webkit-text-size-adjust: 100%;
         }
 
         @media (min-width: 1024px) {
@@ -154,6 +165,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
         .mobile-nav {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
         }
@@ -168,8 +180,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
             transition: all 0.3s ease;
         }
         .center-btn:active { transform: scale(0.9); }
-
-        [x-cloak] { display: none !important; }
 
         .mobile-drawer {
             position: fixed; inset: 0; background: white; z-index: 9999;
@@ -208,26 +218,18 @@ $active_page = basename($_SERVER['PHP_SELF']);
 
     function setGoogTrans(lang) {
         if (lang === 'az') {
-            // AZ seçildikdə tam təmizləmə
             clearGoogTrans();
         } else {
-            // Yeni dili kuki və localStorage-ə yaz
             const domain = window.location.hostname;
-            // Həm birbaşa hosta, həm də nöqtəli domainə yazırıq ki, Google hər yerdə görsün
             document.cookie = "googtrans=/az/" + lang + "; path=/; domain=" + domain;
             document.cookie = "googtrans=/az/" + lang + "; path=/";
             localStorage.setItem('site_lang', lang);
         }
-
-        // Səhifəni tam yeniləyirik ki, kuki dəyişikliyi qüvvəyə minsin
         window.location.reload();
     }
 
     function clearGoogTrans() {
-        // 1. LocalStorage təmizlə
         localStorage.removeItem('site_lang');
-
-        // 2. Google-un bütün kuki növlərini tap və sil
         const domain = window.location.hostname;
         const mainDomain = domain.includes('.') ? domain.substring(domain.lastIndexOf(".", domain.lastIndexOf(".") - 1)) : domain;
 
@@ -245,7 +247,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
             });
         });
 
-        // Google Translate-in daxili iframe və combobox elementlərini sıfırla
         const gtCombo = document.querySelector('.goog-te-combo');
         if (gtCombo) {
             gtCombo.value = 'az';
@@ -263,11 +264,10 @@ $active_page = basename($_SERVER['PHP_SELF']);
                 combo.dispatchEvent(new Event('change'));
                 clearInterval(checkExist);
             }
-            if (attempts > 50) clearInterval(checkExist); // 10 saniyə sonra dayandır
+            if (attempts > 50) clearInterval(checkExist);
         }, 200);
     }
 
-    // Material İkonları qoru
     function protectIcons() {
         document.querySelectorAll('.material-symbols-outlined, .material-icons, [class^="fa-"]').forEach(el => {
             el.classList.add('notranslate');
@@ -279,7 +279,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
     new MutationObserver(protectIcons).observe(document.documentElement, { childList: true, subtree: true });
 </script>
 
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 
 <body
@@ -448,7 +448,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
 </div>
 
 <style>
-    /* Düymənin yuxarıda sabit qalması və estetik görünüşü üçün daxili stillər */
     .mobile-nav {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
@@ -456,7 +455,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
     }
     .center-btn-wrapper {
         position: relative;
-        top: -24px; /* Düyməni naviqasiyadan yuxarı qaldırır */
+        top: -24px;
         display: flex;
         flex-direction: column;
         align-items: center;
