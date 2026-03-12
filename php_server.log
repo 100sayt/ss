@@ -1,12 +1,12 @@
-[Thu Mar 12 20:30:48 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
-[Thu Mar 12 20:30:52 2026] [::1]:56680 Accepted
-[Thu Mar 12 20:30:52 2026] PHP Warning:  require_once(includes/db.php): Failed to open stream: No such file or directory in /app/index.php on line 3
-[Thu Mar 12 20:30:52 2026] PHP Fatal error:  Uncaught Error: Failed opening required 'includes/db.php' (include_path='.:/usr/share/php') in /app/index.php:3
+[Thu Mar 12 21:48:59 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Thu Mar 12 21:49:02 2026] [::1]:44972 Accepted
+[Thu Mar 12 21:49:02 2026] PHP Warning:  require_once(includes/db.php): Failed to open stream: No such file or directory in /app/index.php on line 3
+[Thu Mar 12 21:49:02 2026] PHP Fatal error:  Uncaught Error: Failed opening required 'includes/db.php' (include_path='.:/usr/share/php') in /app/index.php:3
 Stack trace:
 #0 {main}
   thrown in /app/index.php on line 3
-[Thu Mar 12 20:30:52 2026] [::1]:56680 [500]: GET /index.php - Uncaught Error: Failed opening required 'includes/db.php' (include_path='.:/usr/share/php') in /app/index.php:3
+[Thu Mar 12 21:49:02 2026] [::1]:44972 [500]: GET /index.php - Uncaught Error: Failed opening required 'includes/db.php' (include_path='.:/usr/share/php') in /app/index.php:3
 Stack trace:
 #0 {main}
   thrown in /app/index.php on line 3
-[Thu Mar 12 20:30:52 2026] [::1]:56680 Closing
+[Thu Mar 12 21:49:02 2026] [::1]:44972 Closing
