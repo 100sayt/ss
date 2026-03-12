@@ -80,12 +80,12 @@ elseif ($sort === 'oldest') $order_by = "l.created_at ASC";
 
 // Fetch Categories
 $stmt_cats = $pdo->query("SELECT id, " . lang_col('name') . " as name, icon_path FROM categories WHERE parent_id = 0");
-$categories_list = $stmt_cats->fetchAll();
+$categories_data = $stmt_cats->fetchAll();
 
 // Get Selected Category Name
 $selected_category_name = 'Bu kateqoriya';
 if ($cat_filter > 0) {
-    foreach ($categories_list as $cat) {
+    foreach ($categories_data as $cat) {
         if ($cat['id'] == $cat_filter) {
             $selected_category_name = $cat['name'];
             break;
@@ -165,7 +165,7 @@ $normal_listings = $stmt_normal->fetchAll();
 
 // Fetch Cities for search
 $stmt_cities = $pdo->query("SELECT id, " . lang_col('name') . " as name FROM cities");
-$cities_list = $stmt_cities->fetchAll();
+$cities_data = $stmt_cities->fetchAll();
 
 // Rent period labels
 $rent_labels = ['hourly' => '/saat', 'day' => '/gün', 'weekly' => '/həftə', 'month' => '/ay', 'year' => '/il'];
@@ -237,17 +237,14 @@ document.addEventListener('alpine:init', () => {
         </div>
     </template>
 
-    <!-- Prev/Next arrows (show only if more than 1 slide) -->
+    <!-- Dots -->
     <template x-if="slides.length > 1">
-        <div>
-            <!-- Dots -->
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                <template x-for="(slide, index) in slides" :key="'dot-'+index">
-                    <button @click="goTo(index)"
-                            class="h-2 rounded-full transition-all duration-300"
-                            :class="index === current ? 'bg-white w-5' : 'bg-white/50 w-2'"></button>
-                </template>
-            </div>
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+            <template x-for="(slide, index) in slides" :key="'dot-'+index">
+                <button @click="goTo(index)"
+                        class="h-2 rounded-full transition-all duration-300"
+                        :class="index === current ? 'bg-white w-5' : 'bg-white/50 w-2'"></button>
+            </template>
         </div>
     </template>
 </div>
@@ -301,7 +298,7 @@ document.addEventListener('alpine:init', () => {
 
                                 <select name="city_id" class="bg-transparent border-0 outline-none text-slate-700 text-[13px] font-bold focus:ring-0 cursor-pointer appearance-none w-full sm:w-32 pl-2 pr-6 relative z-10 bg-none shadow-none">
                                     <option value="">Bütün Azərbaycan</option>
-                                    <?php foreach($cities_list as $city): ?>
+                                    <?php foreach($cities_data as $city): ?>
                                         <option value="<?= $city['id'] ?>" <?= ($city_filter == $city['id']) ? 'selected' : '' ?>><?= htmlspecialchars($city['name']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -592,7 +589,8 @@ foreach ($all_cats as $row) {
             </div>
         </div>
     </div>
-</template>
+  </template>
+</section>
 
 <?php if (!empty($premium_listings)): ?>
 <section class="w-full px-4 sm:px-6 lg:px-8 py-10">
@@ -605,9 +603,6 @@ foreach ($all_cats as $row) {
                       style="background-color: #ff6b6b;"></span>
             </span>
             <h3 class="text-xl font-black text-slate-900 tracking-tight">VIP elanlar</h3>
-        </div>
-        <div class="flex gap-2">
-
         </div>
     </div>
 
@@ -623,12 +618,12 @@ foreach ($all_cats as $row) {
                             <?= ($ad['user_type'] === 'company') ? 'Mağaza' : 'Premium' ?>
                         </div>
                         <?php if($ad['has_deposit']): ?>
-                             <div class="px-2 py-0.5 bg-slate-900/80 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase rounded-md tracking-wider shadow-lg">Depozit</div>
+                            <div class="px-2 py-0.5 bg-slate-900/80 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase rounded-md tracking-wider shadow-lg">Depozit</div>
                         <?php endif; ?>
                     </div>
 
                     <button class="absolute top-2 right-2 z-10 p-1.5 sm:p-2 bg-white/90 backdrop-blur-md rounded-full text-slate-400 hover:text-red-500 transition-colors shadow-sm"
-                            onclick="event.stopPropagation(); if(typeof toggleFavorite === 'function') toggleFavorite(<?= (int)$ad['id'] ?>, this)">
+                            onclick="event.stopPropagation(); toggleFavorite(<?= (int)$ad['id'] ?>, this)">
                         <span class="material-symbols-outlined text-[16px] sm:text-[18px] <?= (function_exists('is_favorite') && is_favorite($pdo, $ad['id'])) ? 'text-red-500' : '' ?>"
                               style="<?= (function_exists('is_favorite') && is_favorite($pdo, $ad['id'])) ? "font-variation-settings: 'FILL' 1" : '' ?>">favorite</span>
                     </button>
@@ -656,7 +651,6 @@ foreach ($all_cats as $row) {
         <p class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">QİYMƏT</p>
         <p class="text-slate-900 font-black text-sm sm:text-xl tracking-tight truncate">
             <?php
-                // Qiymət tamdırsa qəpiksiz, qəpik varsa 2 rəqəmlə göstər
                 echo ($ad['price'] == (int)$ad['price'])
                      ? number_format($ad['price'], 0, '.', ' ')
                      : number_format($ad['price'], 2, '.', ' ');
@@ -738,7 +732,6 @@ foreach ($all_cats as $row) {
                             <div class="aspect-square rounded-2xl bg-cover bg-center mb-5 relative overflow-hidden shadow-inner flex-shrink-0" style="background-image: url('<?= htmlspecialchars($ad['main_image'] ?? '/assets/img/no-image.jpg') ?>');">
                                 <div class="absolute bottom-2 right-2 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[11px] font-black text-slate-900 shadow-md border border-slate-100/50">
                                    <?php
-                                            // Qiymət tamdırsa qəpiksiz, qəpik varsa 2 rəqəmlə göstər
                                             echo ($ad['price'] == (int)$ad['price'])
                                                  ? number_format($ad['price'], 0, '.', ' ')
                                                  : number_format($ad['price'], 2, '.', ' ');
