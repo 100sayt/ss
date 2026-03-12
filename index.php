@@ -290,9 +290,9 @@ document.addEventListener('alpine:init', () => {
         </div>
     </section>
 
-    <!-- Advanced Filter Bar -->
+    <!-- Advanced Filter Bar (Instant Apply) -->
     <section class="w-full px-4 sm:px-6 lg:px-8 py-2">
-        <form action="/index.php" method="GET" x-data="{ open: false }" class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+        <form action="/index.php" method="GET" class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
             <input type="hidden" name="q" value="<?= htmlspecialchars($search_query) ?>">
             <input type="hidden" name="city_id" value="<?= $city_filter ?>">
             <input type="hidden" name="cat_id" value="<?= $cat_filter ?>">
@@ -301,36 +301,35 @@ document.addEventListener('alpine:init', () => {
                 <div class="flex flex-wrap items-center gap-4 flex-1">
                     <!-- Price Range -->
                     <div class="flex items-center gap-2">
-                        <input type="number" name="min_price" value="<?= $min_price ?>" placeholder="Min. Qiymət" class="w-24 h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-[#ff6b6b] outline-none">
+                        <input type="number" name="min_price" value="<?= $min_price ?>" placeholder="Min. Qiymət" onchange="this.form.submit()" class="w-24 h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-[#ff6b6b] outline-none">
                         <span class="text-slate-300">-</span>
-                        <input type="number" name="max_price" value="<?= $max_price ?>" placeholder="Maks. Qiymət" class="w-24 h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-[#ff6b6b] outline-none">
+                        <input type="number" name="max_price" value="<?= $max_price ?>" placeholder="Maks. Qiymət" onchange="this.form.submit()" class="w-24 h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-[#ff6b6b] outline-none">
                     </div>
 
                     <!-- Deposit Filter -->
-                    <div class="flex items-center h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg">
-                        <select name="has_deposit" class="bg-transparent border-none outline-none text-xs font-bold text-slate-600 focus:ring-0 appearance-none pr-6 relative">
+                    <div class="flex items-center h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg relative">
+                        <select name="has_deposit" onchange="this.form.submit()" class="bg-transparent border-none outline-none text-xs font-bold text-slate-600 focus:ring-0 appearance-none pr-8 cursor-pointer">
                             <option value="">Depozit (Hamısı)</option>
                             <option value="1" <?= $has_deposit_filter === 1 ? 'selected' : '' ?>>Depozitli</option>
                             <option value="0" <?= $has_deposit_filter === 0 ? 'selected' : '' ?>>Depozitsiz</option>
                         </select>
-                        <span class="material-symbols-outlined text-[16px] text-slate-400 absolute ml-24 pointer-events-none">expand_more</span>
+                        <span class="material-symbols-outlined text-[16px] text-slate-400 absolute right-2 pointer-events-none">expand_more</span>
                     </div>
 
                     <!-- Sorting -->
-                    <div class="flex items-center h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg">
-                        <select name="sort" class="bg-transparent border-none outline-none text-xs font-bold text-slate-600 focus:ring-0 appearance-none pr-6 relative">
+                    <div class="flex items-center h-10 px-3 bg-slate-50 border border-slate-200 rounded-lg relative">
+                        <select name="sort" onchange="this.form.submit()" class="bg-transparent border-none outline-none text-xs font-bold text-slate-600 focus:ring-0 appearance-none pr-8 cursor-pointer">
                             <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Əvvəlcə Yeni</option>
                             <option value="oldest" <?= $sort === 'oldest' ? 'selected' : '' ?>>Əvvəlcə Köhnə</option>
                             <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Ucuzdan Bahaya</option>
                             <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Bahadan Ucuza</option>
                         </select>
-                        <span class="material-symbols-outlined text-[16px] text-slate-400 absolute ml-28 pointer-events-none">sort</span>
+                        <span class="material-symbols-outlined text-[16px] text-slate-400 absolute right-2 pointer-events-none">sort</span>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2">
                     <a href="/index.php" class="px-4 py-2 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors">Sıfırla</a>
-                    <button type="submit" class="px-6 py-2 bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest rounded-lg hover:bg-[#ff6b6b] transition-all shadow-md">Tətbiq et</button>
                 </div>
             </div>
         </form>
@@ -676,7 +675,7 @@ foreach ($all_cats as $row) {
                                     <?php endif; ?>
 
                                     <?php if ($ad['has_deposit']): ?>
-                                         <div class="px-2 py-0.5 bg-slate-900/80 backdrop-blur-sm text-white text-[8px] font-black uppercase rounded-md tracking-wider shadow-lg">Depozit</div>
+                                         <div class="px-2 py-0.5 bg-slate-900/80 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-black uppercase rounded-md tracking-wider shadow-lg">Depozit</div>
                                     <?php endif; ?>
                                 </div>
                             </div>
