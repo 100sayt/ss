@@ -190,7 +190,6 @@ require_once 'includes/header.php';
 
                         <button type="submit" class="h-12 px-6 sm:px-10 text-white rounded-xl text-sm font-black transition-all shadow-lg active:scale-95 hover:brightness-110 shrink-0" style="background-color: #ff6b6b;">Axtar</button>
 
-                        <!-- Hidden inputs -->
                         <input type="hidden" name="min_price" :value="minPrice">
                         <input type="hidden" name="max_price" :value="maxPrice">
                         <input type="hidden" name="has_deposit" :value="hasDeposit">
@@ -206,12 +205,12 @@ require_once 'includes/header.php';
     <!-- Refined Compact Filter Modal -->
     <template x-teleport="body">
         <div x-show="filterModalOpen" class="fixed inset-0 z-[1000000] flex items-center justify-center p-4 sm:p-6" x-cloak>
-            <div x-show="filterModalOpen" x-transition.opacity class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" @click="filterModalOpen = false"></div>
+            <div x-show="filterModalOpen" x-transition.opacity class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" @click="filterModalOpen = false"></div>
             <div x-show="filterModalOpen"
                  x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="opacity-0 scale-95 translate-y-8"
                  x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                 class="relative w-full max-w-sm bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+                 class="relative w-full max-w-sm bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
 
                 <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
                     <h3 class="text-base font-black text-slate-900 flex items-center gap-2">
@@ -221,7 +220,7 @@ require_once 'includes/header.php';
                 </div>
 
                 <div class="flex-1 overflow-y-auto p-5 space-y-5">
-                    <!-- City Selection in Modal -->
+                    <!-- City Selection -->
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Şəhər</label>
                         <div class="relative">
@@ -235,7 +234,7 @@ require_once 'includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Category -->
+                    <!-- Category Selection -->
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Kateqoriya</label>
                         <div class="relative">
@@ -249,13 +248,12 @@ require_once 'includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Price -->
+                    <!-- Price Input (Constrained) -->
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Qiymət (AZN)</label>
-                        <div class="flex items-center gap-3">
-                            <input type="number" x-model="minPrice" placeholder="Min" class="flex-1 h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:border-[#ff6b6b]/30 focus:bg-white focus:ring-0 outline-none transition-all">
-                            <div class="w-2 h-px bg-slate-300"></div>
-                            <input type="number" x-model="maxPrice" placeholder="Maks" class="flex-1 h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:border-[#ff6b6b]/30 focus:bg-white focus:ring-0 outline-none transition-all">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" x-model="minPrice" placeholder="Min" class="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:border-[#ff6b6b]/30 focus:bg-white focus:ring-0 outline-none transition-all">
+                            <input type="number" x-model="maxPrice" placeholder="Max" class="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:border-[#ff6b6b]/30 focus:bg-white focus:ring-0 outline-none transition-all">
                         </div>
                     </div>
 
@@ -265,7 +263,7 @@ require_once 'includes/header.php';
                         <div class="grid grid-cols-3 gap-2">
                             <template x-for="opt in [{v:'',l:'Hamısı'}, {v:'1',l:'Var'}, {v:'0',l:'Yox'}]">
                                 <button type="button" @click="hasDeposit = opt.v"
-                                        :class="hasDeposit == opt.v ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-600 border-transparent hover:bg-slate-100'"
+                                        :class="hasDeposit == opt.v ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-600 border-transparent hover:bg-slate-100'"
                                         class="h-9 rounded-xl text-[9px] font-black uppercase tracking-tighter border-2 transition-all" x-text="opt.l"></button>
                             </template>
                         </div>
@@ -286,7 +284,7 @@ require_once 'includes/header.php';
 
                 <div class="p-5 border-t border-slate-100 bg-white flex gap-3 shrink-0">
                     <button type="button" @click="minPrice=''; maxPrice=''; hasDeposit=''; sortOrder='newest'; catId=''; cityId=''; document.getElementById('mainSearchForm').submit()" class="flex-1 h-11 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors">Sıfırla</button>
-                    <button type="button" @click="document.getElementById('mainSearchForm').submit()" class="flex-[2] h-11 bg-[#ff6b6b] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all shadow-md">Göstər</button>
+                    <button type="button" @click="document.getElementById('mainSearchForm').submit()" class="flex-[2] h-11 bg-[#ff6b6b] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all shadow-lg shadow-[#ff6b6b]/20">Göstər</button>
                 </div>
             </div>
         </div>
