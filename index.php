@@ -248,7 +248,7 @@ require_once 'includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Price Input (Constrained) -->
+                    <!-- Price Range -->
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Qiymət (AZN)</label>
                         <div class="grid grid-cols-2 gap-2">
@@ -273,7 +273,7 @@ require_once 'includes/header.php';
                     <div>
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Sıralama</label>
                         <div class="grid grid-cols-2 gap-2">
-                            <template x-for="opt in [{v:'newest',l:'Yeni'}, {v:'oldest',l:'Köhnə'}, {v:'price_asc',l:'Ucuz'}, {v:'price_desc',l:'Baha'}]">
+                            <template x-for="opt in [{v:'newest',l:'Hamısı'}, {v:'newest',l:'Yeni'}, {v:'oldest',l:'Köhnə'}, {v:'price_asc',l:'Ucuz'}, {v:'price_desc',l:'Baha'}]">
                                 <button type="button" @click="sortOrder = opt.v"
                                         :class="sortOrder == opt.v ? 'border-[#ff6b6b] bg-[#ff6b6b]/5 text-[#ff6b6b]' : 'border-slate-100 text-slate-600'"
                                         class="h-10 rounded-xl text-[10px] font-bold border-2 transition-all" x-text="opt.l"></button>
@@ -284,7 +284,7 @@ require_once 'includes/header.php';
 
                 <div class="p-5 border-t border-slate-100 bg-white flex gap-3 shrink-0">
                     <button type="button" @click="minPrice=''; maxPrice=''; hasDeposit=''; sortOrder='newest'; catId=''; cityId=''; document.getElementById('mainSearchForm').submit()" class="flex-1 h-11 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors">Sıfırla</button>
-                    <button type="button" @click="document.getElementById('mainSearchForm').submit()" class="flex-[2] h-11 bg-[#ff6b6b] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all shadow-lg shadow-[#ff6b6b]/20">Göstər</button>
+                    <button type="button" @click="document.getElementById('mainSearchForm').submit()" class="flex-[2] h-11 bg-[#ff6b6b] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all shadow-md">Göstər</button>
                 </div>
             </div>
         </div>
