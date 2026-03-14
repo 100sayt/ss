@@ -1,5 +1,6 @@
-I will fix the iOS layout breakage by:
-1. Reordering Tailwind configuration so it loads before the CDN script.
-2. Fixing invalid/empty color values in the Tailwind config.
-3. Adding essential CSS fallbacks (like .hidden) to ensure layout structure even if Tailwind fails.
-4. Cleaning up potential whitespace issues in PHP files that might trigger Quirks Mode.
+I will move the search and category sections from index.php to header.php.
+1. Extract the search form and "Populyar kateqoriyalar" section from index.php.
+2. Update header.php to include a central section for these elements.
+3. Ensure category data is available in header.php by moving the relevant SQL queries.
+4. Adjust styling to match the tap.az look (search on top, categories below).
+5. Clean up index.php by removing the moved sections.
