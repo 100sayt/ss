@@ -1,0 +1,51 @@
+[Sun Mar 15 00:13:43 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sun Mar 15 00:14:01 2026] [::1]:48352 Accepted
+[Sun Mar 15 00:14:01 2026] PHP Warning:  Undefined variable $pdo in /app/index.php on line 9
+[Sun Mar 15 00:14:01 2026] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /app/index.php:9
+Stack trace:
+#0 {main}
+  thrown in /app/index.php on line 9
+[Sun Mar 15 00:14:01 2026] [::1]:48352 [500]: HEAD /index.php - Uncaught Error: Call to a member function query() on null in /app/index.php:9
+Stack trace:
+#0 {main}
+  thrown in /app/index.php on line 9
+[Sun Mar 15 00:14:01 2026] [::1]:48352 Closing
+[Sun Mar 15 00:16:52 2026] [::1]:33426 Accepted
+[Sun Mar 15 00:16:52 2026] [::1]:33426 [200]: HEAD /index.php
+[Sun Mar 15 00:16:52 2026] [::1]:33426 Closing
+[Sun Mar 15 00:17:51 2026] [::1]:49586 Accepted
+[Sun Mar 15 00:17:51 2026] [::1]:49586 [200]: GET /index.php
+[Sun Mar 15 00:17:51 2026] [::1]:49586 Closing
+[Sun Mar 15 00:17:52 2026] [::1]:49602 Accepted
+[Sun Mar 15 00:17:52 2026] [::1]:49602 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:17:52 2026] [::1]:49602 Closing
+[Sun Mar 15 00:17:52 2026] [::1]:49616 Accepted
+[Sun Mar 15 00:17:52 2026] [::1]:49616 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:17:52 2026] [::1]:49616 Closing
+[Sun Mar 15 00:17:55 2026] [::1]:49622 Accepted
+[Sun Mar 15 00:17:55 2026] [::1]:49622 [200]: GET /index.php
+[Sun Mar 15 00:17:55 2026] [::1]:49622 Closing
+[Sun Mar 15 00:17:55 2026] [::1]:49632 Accepted
+[Sun Mar 15 00:17:55 2026] [::1]:49632 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:17:55 2026] [::1]:49632 Closing
+[Sun Mar 15 00:17:55 2026] [::1]:49648 Accepted
+[Sun Mar 15 00:17:55 2026] [::1]:49648 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:17:55 2026] [::1]:49648 Closing
+[Sun Mar 15 00:18:43 2026] [::1]:43686 Accepted
+[Sun Mar 15 00:18:43 2026] [::1]:43686 [200]: GET /index.php
+[Sun Mar 15 00:18:43 2026] [::1]:43686 Closing
+[Sun Mar 15 00:18:43 2026] [::1]:43688 Accepted
+[Sun Mar 15 00:18:43 2026] [::1]:43688 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:18:43 2026] [::1]:43688 Closing
+[Sun Mar 15 00:18:44 2026] [::1]:43692 Accepted
+[Sun Mar 15 00:18:44 2026] [::1]:43692 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:18:44 2026] [::1]:43692 Closing
+[Sun Mar 15 00:18:47 2026] [::1]:39782 Accepted
+[Sun Mar 15 00:18:47 2026] [::1]:39782 [200]: GET /index.php
+[Sun Mar 15 00:18:47 2026] [::1]:39782 Closing
+[Sun Mar 15 00:18:47 2026] [::1]:39784 Accepted
+[Sun Mar 15 00:18:47 2026] [::1]:39784 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:18:47 2026] [::1]:39784 Closing
+[Sun Mar 15 00:18:47 2026] [::1]:39792 Accepted
+[Sun Mar 15 00:18:47 2026] [::1]:39792 [404]: GET /assets/img/logo.png - No such file or directory
+[Sun Mar 15 00:18:47 2026] [::1]:39792 Closing

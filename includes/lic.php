@@ -1,0 +1,2 @@
+<?php
+// lic.php
